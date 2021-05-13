@@ -1,6 +1,8 @@
 # colorio-tool
 It's a really rough and basic tool from a newbie programmer using nschloe/colorio mostly just for things I want to use it for or think of adding to it.
 
+You need `colorio` and `tabulate`, which can be acquired from `pip`.
+
 Example output, generating a palette:
 ```
 Choose from the options available:
