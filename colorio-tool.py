@@ -2,11 +2,17 @@ import colorio
 import math
 from tabulate import tabulate
 
+def ch_to_a(chroma, hue):
+    return chroma * (math.cos(math.radians(hue)))
+
+def ch_to_b(chroma, hue):
+    return chroma * (math.sin(math.radians(hue)))
+
 def jch_to_lab(jch):
     in_lightness, in_chroma, in_hue = jch
 
-    a_coord = in_chroma * (math.cos(math.radians(in_hue)))
-    b_coord = in_chroma * (math.sin(math.radians(in_hue)))
+    a_coord = ch_to_a(in_chroma, in_hue)
+    b_coord = ch_to_b(in_chroma, in_hue)
 
     jab = [in_lightness, a_coord, b_coord]
     
@@ -16,9 +22,9 @@ def prompt_jch_to_ciecam16ucs():
     L_A = 64 / math.pi / 5
     cam16ucs = colorio.cs.CAM16UCS(0.69, 20, L_A)
 
-    in_lightness = int(input("J (Lightness): "))
-    in_chroma = int(input("c (Chroma): "))
-    in_hue = int(input("h (Hue): "))
+    in_lightness = int(input("Lightness: "))
+    in_chroma = int(input("Chroma: "))
+    in_hue = int(input("Hue: "))
 
     in_jch = [in_lightness, in_chroma, in_hue]
 
@@ -113,8 +119,8 @@ def generate_palette():
         result_r    = result[0]
         result_g    = result[1]
         result_b    = result[2]
-        result_x    = accent_chroma * math.cos(math.radians(current_hue))
-        result_y    = accent_chroma * math.sin(math.radians(current_hue))
+        result_x    = ch_to_a(accent_chroma, current_hue)
+        result_y    = ch_to_b(accent_chroma, current_hue)
         current_row = ["accent" + str(a),
                        round(accent_lightness,3),
                        round(current_hue,3),
