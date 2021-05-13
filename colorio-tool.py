@@ -83,6 +83,11 @@ def generate_palette():
         max_lightness    = float(input("Greys max lightness: "))
     accent_range     = int(input("# of Accents: "))
     if (accent_range > 0):
+        hue_offset    = input("Custom hue offset: ")
+        if (hue_offset == ""):
+            hue_offset = (360 / accent_range / 2)
+        else:
+            hue_offset = float(hue_offset)
         accent_lightness = float(input("Accents lightness: "))
         accent_chroma    = float(input("Accents chroma: "))
     
@@ -113,7 +118,7 @@ def generate_palette():
         #      "b: " + str(round(result_b,3)) + " ")
     
     for a in range(accent_range):
-        current_hue = (360 / accent_range) * a + (360 / accent_range / 2)
+        current_hue = ((360 / accent_range) * a + hue_offset) % 360
         derived_jch = [accent_lightness, accent_chroma, current_hue]
         result      = cam16ucs.to_rgb255(jch_to_lab(derived_jch))
         result_r    = result[0]
