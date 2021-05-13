@@ -71,20 +71,16 @@ def generate_palette():
 	L_A = 64 / math.pi / 5
 	cam16ucs = colorio.cs.CAM16UCS(0.69, 20, L_A)
 
-	grey_range       = int(input("How many grey swatches to generate?: "))
-	max_lightness    = float(input("Maximum lightness for greys?: "))
-	min_lightness    = float(input("Minimum lightness for greys?: "))
-	accent_range     = int(input("How many color accents?: "))
-	accent_chroma    = float(input("Chroma value of the accents?: "))
-	accent_lightness = float(input("Lightness value of the accents?: "))
-	table_result     = [["Name",
-			     "J",
-			     "h",
-			     "R",
-			     "G",
-			     "B",
-			     "a*",
-			     "b*"]]
+	grey_range       = int(input("# of Greys: "))
+    if (grey_range > 0):
+	    min_lightness    = float(input("Greys min J: "))
+	    max_lightness    = float(input("Greys max J: "))
+	accent_range     = int(input("# of Accents: "))
+    if (accent_range > 0):
+	    accent_lightness = float(input("Accents J: "))
+	    accent_chroma    = float(input("Accents c: "))
+	
+    table_result     = [["Name", "J", "h", "R", "G", "B", "a*", "b*"]]
 
 	for g in range(grey_range):
 		current_lightness = (max_lightness - min_lightness) / (grey_range - 1) * g + min_lightness
@@ -94,13 +90,13 @@ def generate_palette():
 		result_g          = result[1]
 		result_b          = result[2]
 		current_row       = ["grey" + str(g),
-				     round(current_lightness,3),
-				     round(0.000,3),
-				     round(result_r,3),
-				     round(result_g,3),
-				     round(result_b,3),
-				     round(0.000,3),
-				     round(0.000,3)]
+                             round(current_lightness,3),
+                             round(0.000,3),
+                             round(result_r,3),
+                             round(result_g,3),
+                             round(result_b,3),
+                             round(0.000,3),
+                             round(0.000,3)]
 		table_result.append(current_row)
 
 		# Old method of printing results
@@ -120,13 +116,13 @@ def generate_palette():
 		result_x    = accent_chroma * math.cos(math.radians(current_hue))
 		result_y    = accent_chroma * math.sin(math.radians(current_hue))
 		current_row = ["accent" + str(a),
-			       round(accent_lightness,3),
-			       round(current_hue,3),
-			       round(result_r,3),
-			       round(result_g,3),
-			       round(result_b,3),
-			       round(result_x,3),
-			       round(result_y,3)]
+                       round(accent_lightness,3),
+                       round(current_hue,3),
+                       round(result_r,3),
+                       round(result_g,3),
+                       round(result_b,3),
+                       round(result_x,3),
+                       round(result_y,3)]
 		table_result.append(current_row)
 
 		# Old method of printing results
