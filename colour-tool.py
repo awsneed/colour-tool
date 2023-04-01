@@ -1,6 +1,6 @@
 import colour
 import math
-import tabulate
+from tabulate import tabulate
 
 def polar_to_cartesian(jmh):
     lightness = jmh[0]
@@ -17,17 +17,17 @@ def cam16ucs_jmh_to_srgb(jmh):
     return [i * 255 for i in out_rgb]
     
 def prompt_cam16ucs_jmh_to_srgb():
-    in_j = int(input("Lightness: "))
-    in_m = int(input("Colorfulness: "))
-    in_h = int(input("Hue: "))
+    in_j = float(input("Lightness [0-100]: ")) / 100
+    in_m = float(input("Colorfulness [0-100]: ")) / 100
+    in_h = float(input("Hue [0-360]: "))
 
     print(cam16ucs_jmh_to_srgb([in_j, in_m, in_h]))
 
 def generate_palette():
     grey_range       = int(input("# of Greys: "))
     if (grey_range > 0):
-        min_lightness    = float(input("Greys min lightness: "))
-        max_lightness    = float(input("Greys max lightness: "))
+        min_lightness    = float(input("Greys min lightness: ")) / 100
+        max_lightness    = float(input("Greys max lightness: ")) / 100
 
     accent_range     = int(input("# of Accents: "))
     if (accent_range > 0):
@@ -36,8 +36,8 @@ def generate_palette():
             hue_offset = (360 / accent_range / 2)
         else:
             hue_offset = float(hue_offset)
-        accent_lightness = float(input("Accents lightness: "))
-        accent_colorfulness    = float(input("Accents colorfulness: "))
+        accent_lightness = float(input("Accents lightness: ")) / 100
+        accent_colorfulness    = float(input("Accents colorfulness: ")) / 100
     
     table_result     = [["Name", "J", "h", "R", "G", "B"]]
 
@@ -49,7 +49,7 @@ def generate_palette():
         result_g          = result[1]
         result_b          = result[2]
         current_row       = ["grey" + str(g),
-                             round(current_lightness,3),
+                             round(current_lightness * 100, 3),
                              round(0.000,3),
                              round(result_r,3),
                              round(result_g,3),
@@ -71,7 +71,7 @@ def generate_palette():
         result_g    = result[1]
         result_b    = result[2]
         current_row = ["accent" + str(a),
-                       round(accent_lightness,3),
+                       round(accent_lightness * 100, 3),
                        round(current_hue,3),
                        round(result_r,3),
                        round(result_g,3),
